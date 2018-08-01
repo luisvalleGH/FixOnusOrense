@@ -1,4 +1,6 @@
 ﻿using Eternet.Mikrotik;
+using Eternet.Mikrotik.Entities;
+using Eternet.Mikrotik.Entities.Interface.Bridge;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
@@ -39,6 +41,9 @@ namespace StandardConsoleApp
             if (args == null) throw new ArgumentNullException(nameof(args));
 
             var mycfg = InitialSetup();
+            var crfConnection = GetMikrotikConnection(mycfg.CrfIP, mycfg.CrfUser, mycfg.CrfPass);
+            var bridgeHostReader = crfConnection.CreateEntityReader<BridgeHost>();
+
         }
     }
 }
