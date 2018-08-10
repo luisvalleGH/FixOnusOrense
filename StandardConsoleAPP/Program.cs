@@ -1,14 +1,14 @@
-﻿using Eternet.Mikrotik;
+﻿using Eternet.Cloud.Storage;
+using Eternet.Mikrotik;
 using Eternet.Mikrotik.Entities;
 using Eternet.Mikrotik.Entities.Interface.Bridge;
+using Eternet.Mikrotik.Entities.Ip;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Eternet.Cloud.Storage;
-using Eternet.Mikrotik.Entities.Ip;
 using Log = Serilog.Log;
 
 namespace StandardConsoleApp
@@ -63,7 +63,7 @@ namespace StandardConsoleApp
             foreach (var host in hostsToCheck)
             {
                 if (dic.ContainsKey(host))
-                Log.Information("La {ip} ya existe en el diccionario", host);
+                    Log.Information("La {ip} ya existe en el diccionario", host);
                 else
                 {
                     var routerConnection = GetMikrotikConnection(host, mycfg.RouterUser, mycfg.RouterPass);
@@ -78,6 +78,16 @@ namespace StandardConsoleApp
                     routerConnection.Close();
                 }
             }
+
+            //Mostrar y contar todos los elementos del diccionario persistente
+            //var count = 0;
+            //foreach (var word in dic)
+            //{
+            //    Log.Information("Cliente : {hostIp} Onu : {onuMac}", word.Key, word.Value);
+            //    count++;
+            //}
+            //Log.Information("Cantidad de elementos en el diccionario {countdic}", count);
+            //Console.ReadKey();
         }
     }
 }
